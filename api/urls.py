@@ -25,7 +25,7 @@ urlpatterns = [
     path('api/', include([
         path('account/', include('api.apps.account.urls', namespace='account')),
         path('company/', include('api.apps.company.urls', namespace='company')),
-        # path('blog/', include('api.apps.blog.urls', namespace='blog')),
+        path('blog/', include('api.apps.blog.urls', namespace='blog')),
         # path('video/', include('api.apps.video.urls', namespace='video')),
     ])),
     re_path(r'^i18n/', include('django.conf.urls.i18n')),

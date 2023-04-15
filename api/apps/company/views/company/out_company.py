@@ -4,9 +4,9 @@ from rest_framework import status
 from django.db.models import Count
 from django.http import Http404
 from api.apps.company.models import Company
-from api.apps.company.front.serializers.company import OutCompanySerializer
+from api.apps.company.serializers.company import OutCompanySerializer
 
-class CompanyView(BaseAPIView):
+class ItemView(BaseAPIView):
 
 	def get(self, request, format=None):
 		company = Company.objs.valid().filter(id=request.company.id).\
@@ -15,4 +15,4 @@ class CompanyView(BaseAPIView):
 		if not company:
 			raise Http404('Company not found')
 		serializer = OutCompanySerializer(company, context={'request':request})
-		return Response(serializer.data)
+		return Response(serializer.data, status=status.HTTP_200_OK)

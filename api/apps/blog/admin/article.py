@@ -73,6 +73,7 @@ class ArticleBodyAdmin(AdminBaseModel):
 
 	list_display = [
 		'get_article',
+		'lang',
 		'name',
 	]
 	fieldsets = (
@@ -86,8 +87,12 @@ class ArticleBodyAdmin(AdminBaseModel):
 			)
 		}),
 	)
+	list_filter = (
+		'article__is_valid', 
+		'lang',
+	)
 	search_fields = ('article__slug',)
-	# ordering = ('-created_at',)
+	ordering = ('-article__created_at',)
 	raw_id_fields = ['article',]
 
 	@admin.display(description='Article')

@@ -63,6 +63,7 @@ INSTALLED_APPS = [
     'api.apps.company.apps.CompanyConfig',
     'api.apps.blog.apps.BlogConfig',
     'api.apps.chat.apps.ChatConfig',
+    'api.apps.video.apps.VideoConfig',
     # extensions
     'rest_framework',
     'rest_framework.authtoken',

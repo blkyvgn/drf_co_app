@@ -118,15 +118,15 @@ class Category(MPTTModel, BaseModel, TimestampsMixin, SoftdeleteMixin, HelpersMi
 	@property
 	def short_desc(self):
 		return get_json_by_key(
-			self.short_desc, 
+			self._short_desc, 
 			key=get_language(), 
 			default=settings.LANGUAGE_CODE
 		)
 
 	@short_desc.setter
 	def short_desc(self, v):
-		self._name = set_json_by_key(
-			self.short_desc, v, 
+		self._short_desc = set_json_by_key(
+			self._short_desc, v, 
 			key=get_language(), 
 			default=settings.LANGUAGE_CODE
 		)
