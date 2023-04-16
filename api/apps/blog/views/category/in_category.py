@@ -3,6 +3,7 @@ from rest_framework.permissions import IsAuthenticated
 from rest_framework.response import Response
 from django.http import JsonResponse
 from api.apps.blog.serializers.category import (
+	InCategoryListSerializer,
 	InCategorySerializer,
 	InCreateCategorySerializer,
 	InUpdateCategorySerializer,
@@ -33,7 +34,7 @@ class ListView(ProtectBaseAPIView):
 		categories = Category.objs.select_related('parent').\
 			annotate(articles_count=Count('articles')).\
 			order_by('-created_at')
-		categories = InCategorySerializer.paginator(request, categories)
+		categories = InCategoryListSerializer.paginator(request, categories)
 		return Response({**categories}, status=status.HTTP_200_OK)
 
 
@@ -74,6 +75,7 @@ class EditView(ProtectBaseAPIView):
 			context={'request': request}
 		)
 		serializer.is_valid(raise_exception=True)
+		serializer.save()
 		return Response({'data':category_id}, status=status.HTTP_200_OK)
 
 
@@ -92,8 +94,8 @@ class DeleteView(ProtectBaseAPIView):
 '''
 {
 "slug":"cat-slug", (unique)
-"cat_name":"Cat3",
-"cat_short_desc":"qwerty qwerty",
+"name":"Cat3",
+"short_desc":"qwerty qwerty",
 "is_valid":"True",
 "parent_id":1,
 "company_id":1

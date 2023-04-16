@@ -26,8 +26,10 @@ urlpatterns = [
         path('account/', include('api.apps.account.urls', namespace='account')),
         path('company/', include('api.apps.company.urls', namespace='company')),
         path('blog/', include('api.apps.blog.urls', namespace='blog')),
-        # path('video/', include('api.apps.video.urls', namespace='video')),
+        path('video/', include('api.apps.video.urls', namespace='video')),
     ])),
+    path('chat/', include('api.apps.chat.urls', namespace='chat')),
+
     re_path(r'^i18n/', include('django.conf.urls.i18n')),
     re_path(r'^ckeditor/', include('ckeditor_uploader.urls')),
 ]

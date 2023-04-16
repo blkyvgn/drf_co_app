@@ -29,6 +29,7 @@ Account = get_user_model()
 class ListView(BaseAPIView):
 	def get(self, request, format=None):
 		search_name = get_filter_arguments(request).get('name', None)
+		search_tag = get_filter_arguments(request).get('tag', None)
 		articles = Article.objs.valid().company(request.company.id).\
 			select_related('category').\
 			select_related('author').\
@@ -44,6 +45,9 @@ class ListView(BaseAPIView):
 			filter(body__lang='en').\
 			filter_by_params(_or=True, 
 				body__name__icontains=search_name
+			).\
+			filter_by_params(_or=True, 
+				tags__tag__icontains=search_tag
 			).\
 			order_by('-created_at').\
 			distinct()
@@ -66,6 +70,11 @@ class ItemView(BaseAPIView):
 				comments_count=Count('comments'),
 				articles_langs= GroupConcat('body__lang', True),
 			).first()
+			# prefetch_related(
+			# 	Prefetch('comments', 
+			# 		queryset=Comment.objs.valid(), 
+			# 	)
+			# ).\
 		if not article:
 			raise Http404('Account not found')
 		serializer = OutArticleSerializer(article, context={'request':request})

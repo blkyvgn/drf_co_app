@@ -54,7 +54,7 @@ class Article(BaseModel, ImgMixin, HelpersMixin, TimestampsMixin):
 	)
 	tags = models.ManyToManyField(
 		'Tag',
-		related_name='article_tags',
+		related_name='tag_articles',
 	)
 	company = models.ForeignKey(
 		'company.Company',

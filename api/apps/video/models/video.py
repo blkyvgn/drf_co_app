@@ -14,10 +14,11 @@ from api.vendors.mixins.model import (
 Account = get_user_model()
 
 def video_upload_to(instance, filename):
-	return f'company/{instance.product.company.alias}/video/{filename}'
+	return f'company/{instance.company.id}/video/{filename}'
 
 def thumb_upload_to(instance, filename):
-	return f'company/{instance.product.company.alias}/video/thumb/{filename}'
+	return f'company/{instance.company.id}/video/thumb/{filename}'
+
 
 class Video(BaseModel, TimestampsMixin, HelpersMixin, ImgMixin):
 	slug = models.SlugField(
@@ -27,11 +28,21 @@ class Video(BaseModel, TimestampsMixin, HelpersMixin, ImgMixin):
 		upload_to=thumb_upload_to,
 		null=True, 
 		blank=True,
+		validators=[
+			FileExtensionValidator(allowed_extensions=settings.IMAGE_EXTS)
+		]
 	)
 	file = models.FileField(
-        upload_to=video_upload_to,
-        validators=[FileExtensionValidator(allowed_extensions=['mp4'])]
-    )
+		upload_to=video_upload_to,
+		validators=[
+			FileExtensionValidator(allowed_extensions=settings.VIDEO_FILE_EXTS)
+		]
+	)
+	links = models.JSONField( #{'youtube':{'link':'<youtube_link>','is_active':true}},}
+		default=dict,
+		null=True, 
+		blank=True,
+	)
 	alt = models.JSONField(
 		max_length=80, 
 		null=True, 
@@ -62,3 +73,9 @@ class Video(BaseModel, TimestampsMixin, HelpersMixin, ImgMixin):
 	class Meta:
 		verbose_name = tr('video')
 		verbose_name_plural = tr('videos')
+		constraints = [
+			models.UniqueConstraint(fields=['company_id', 'slug'], name='unique_video_slug')
+		]
+		indexes = [
+			models.Index(fields=('company_id', 'slug')),
+		]

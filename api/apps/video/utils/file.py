@@ -1,8 +1,7 @@
 from pathlib import Path
 from typing import IO, Generator
 from django.shortcuts import get_object_or_404
-
-from .models import Video
+from api.apps.video.models import Video
 
 # 8192
 def ranged(file: IO[bytes], start: int = 0, end: int = None, block_size: int = 16384,) -> Generator[bytes, None, None]:

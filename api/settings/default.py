@@ -5,6 +5,9 @@ NUMBER_PAGINATIONS = 10
 
 RATING_MAX = 10
 
+IMAGE_EXTS = ['jpg','jpeg']
+VIDEO_FILE_EXTS = ['mp4']
+
 IMAGE_WIDTH = {
     'THUMBNAIL': 60,
     'SHOWCASE': 220,

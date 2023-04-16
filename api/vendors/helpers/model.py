@@ -5,6 +5,7 @@ def get_json_by_key(val, key=None, default=None):
 	return lang_value
 
 def set_json_by_key(val, v, key=None, default=None):
+	print(val, v)
 	_key = key if key is not None else default
 	dict_val = {} if val is None else val.copy()
 	dict_val[str(_key)] = v

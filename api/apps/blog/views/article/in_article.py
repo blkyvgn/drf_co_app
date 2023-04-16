@@ -99,7 +99,7 @@ class EditView(ProtectBaseAPIView):
 		article_id = int(pk)
 		article = Article.objs.filter(id=article_id).first()
 		if not article:
-			return HttpResponse(status=status.HTTP_404_NOT_FOUND)
+			return Response(status=status.HTTP_404_NOT_FOUND)
 		serializer = InCreateUpdateArticleSerializer(
 			data=request.data, 
 			instance=article, 

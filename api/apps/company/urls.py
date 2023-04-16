@@ -14,6 +14,6 @@ urlpatterns = [
 ]
 urlpatterns += [
 	# path('in/', include([
-	# 	path('item/', internal.show, name='in_company_item'),
+	# 
 	# ]))
 ]

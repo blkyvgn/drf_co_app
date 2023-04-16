@@ -17,8 +17,14 @@ class Tag(BaseModel):
 		on_delete=models.CASCADE, 
 		related_name='comp_tags',
 	)
-	article = models.PositiveIntegerField()
-	category = models.PositiveIntegerField() 
+	article_id = models.IntegerField(
+		null=True, 
+		blank=True,
+	)
+	category_id = models.IntegerField(
+		null=True, 
+		blank=True,
+	) 
 
 	class Meta:
 		verbose_name = tr('tag')

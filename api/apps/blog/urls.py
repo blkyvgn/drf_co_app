@@ -7,6 +7,9 @@ from api.apps.blog.views.category import (
 	in_category,
 	out_category,
 )
+from api.apps.blog.views.comment import (
+	out_comment,
+)
 
 app_name = 'blog'
 
@@ -23,6 +26,13 @@ urlpatterns = [
 			path('item/<int:pk>/', out_category.ItemView.as_view(), name='out_category'),
 		])),
 	])),
+	path('comment/', include([
+		path('out/', include([
+			path('list/<int:article_pk>/', out_comment.ListView.as_view(), name='out_comments'),
+			path('create/', out_comment.CreateView.as_view(), name='out_comment_create'),
+		])),
+	])),
+	
 ]
 urlpatterns += [
 	path('article/', include([
