@@ -1,16 +1,33 @@
 from rest_framework import serializers
+from api.vendors.helpers.translation import tr
 from api.vendors.helpers.validators import (
 	email_validation_check,
 	passwd_validation_check,
 )
+from rest_framework.validators import UniqueValidator
 from api.apps.account.models.account import Customer
 from api.apps.account.models.account import Account
 
 
-
 class AccountRegisterSerializer(serializers.ModelSerializer):
-	email = serializers.EmailField(required=True)
-	username = serializers.CharField(required=True)
+	email = serializers.EmailField(
+		required=True,
+		validators=[
+			UniqueValidator(
+				queryset=Account.objects.all(),
+				message=tr('not_unique_user_email')
+			)
+		]
+	)
+	username = serializers.CharField(
+		required=True,
+		validators=[
+			UniqueValidator(
+				queryset=Account.objects.all(),
+				message=tr('not_unique_username')
+			)
+		]
+	)
 	password = serializers.CharField(min_length=8, write_only=True)
 	password_confirm = serializers.CharField(min_length=8, write_only=True)
 
